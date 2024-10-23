@@ -15,9 +15,10 @@ import SelectInput from './SelectInput';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@radix-ui/react-icons';
-import { Gender } from '@/utils/types';
+import { CrateUserState, Gender } from '@/utils/types';
+import { useAppContext } from '@/store/store';
 
-const initialState = {
+const initialState: CrateUserState = {
   message: '',
 };
 
@@ -26,8 +27,7 @@ export default function AddUserButton() {
   const [openDialog, setOpenDialog] = useState(false);
   const [genderOptions, setGenderOptions] = useState<Gender[]>([]);
   const { toast } = useToast();
-
-  console.log(genderOptions);
+  const { users, fetchUsers } = useAppContext();
 
   useEffect(() => {
     async function fetchGender() {
@@ -41,6 +41,7 @@ export default function AddUserButton() {
     if (state.message && state.message !== 'User already exists') {
       toast({ description: state.message });
       setOpenDialog(false);
+      fetchUsers();
     }
 
     if (state.message === 'User already exists') {

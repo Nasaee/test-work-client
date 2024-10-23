@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { api } from './api';
 import { AxiosError } from 'axios';
-import { Gender } from './types';
+import { CrateUserState, Gender } from './types';
 
 export const getGenders = async (): Promise<Gender[]> => {
   try {
@@ -15,7 +15,7 @@ export const getGenders = async (): Promise<Gender[]> => {
   }
 };
 
-export const createUser = async (state: any, formData: FormData) => {
+export const createUser = async (state: CrateUserState, formData: FormData) => {
   const name = formData.get('name') as string;
   const lastName = formData.get('lastName') as string;
   const nickName = formData.get('nickName') as string;
@@ -34,14 +34,19 @@ export const createUser = async (state: any, formData: FormData) => {
       birthDay: new Date(birthDay).toISOString(),
       genderId: genderId,
     });
+    return { message: 'User Created' };
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
         message: error.response?.data?.message || 'Something went wrong',
       };
     }
-    return { message: 'An unexpected error occurred' };
   }
+  return { message: 'An unexpected error occurred' };
+};
+
+export const fetchUsers = async () => {
+  const { data } = await api.get('/user');
   revalidatePath('/');
-  return { message: 'User Created' };
+  return data;
 };
