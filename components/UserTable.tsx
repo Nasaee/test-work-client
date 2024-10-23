@@ -16,12 +16,11 @@ import { cn } from '@/lib/utils';
 import { useAppContext } from '@/store/store';
 import { User } from '@/utils/types';
 import { ButtonDelete } from './CustomButton';
+import UpdateUserForm from './form/UpdateUserForm';
 
 function UsersTable() {
   const { users, fetchUsers } = useAppContext();
   const [selecteUser, setSelectedUser] = useState<User | null>(null);
-
-  console.log(selecteUser);
 
   useEffect(() => {
     async function getUsers() {
@@ -83,6 +82,12 @@ function UsersTable() {
           ))}
         </TableBody>
       </Table>
+      {selecteUser && (
+        <UpdateUserForm
+          user={selecteUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }

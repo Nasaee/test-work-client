@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { api } from './api';
 import { AxiosError } from 'axios';
-import { CrateUserState, Gender } from './types';
+import { Gender } from './types';
 
 export const getGenders = async (): Promise<Gender[]> => {
   try {
@@ -15,7 +15,7 @@ export const getGenders = async (): Promise<Gender[]> => {
   }
 };
 
-export const createUser = async (state: CrateUserState, formData: FormData) => {
+export const createUser = async (state: any, formData: FormData) => {
   const name = formData.get('name') as string;
   const lastName = formData.get('lastName') as string;
   const nickName = formData.get('nickName') as string;
@@ -49,4 +49,35 @@ export const fetchUsers = async () => {
   const { data } = await api.get('/user');
   revalidatePath('/');
   return data;
+};
+
+export const updateUser = async (state: any, formData: FormData) => {
+  const id = formData.get('id') as string;
+  const name = formData.get('name') as string;
+  const lastName = formData.get('lastName') as string;
+  const nickName = formData.get('nickName') as string;
+  const birthDay = formData.get('birthDay') as string;
+  const genderId = formData.get('genderId') as string;
+
+  if (!name || !lastName || !nickName || !birthDay || !genderId) {
+    return { message: 'All fields are required' };
+  }
+
+  try {
+    await api.patch(`/user/${id}`, {
+      name,
+      lastName,
+      nickName,
+      birthDay: new Date(birthDay).toISOString(),
+      genderId: genderId,
+    });
+    return { message: 'User Updated' };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        message: error.response?.data?.message || 'Something went wrong',
+      };
+    }
+    return { message: 'An unexpected error occurred' };
+  }
 };

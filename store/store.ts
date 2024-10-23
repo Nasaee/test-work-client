@@ -20,6 +20,7 @@ export const useAppContext = create<AppContext>((set) => ({
   deleteUser: async (id: string) => {
     await api.delete(`/user/${id}`);
   },
+
   genders: [],
   fetchGenders: async () => {
     const genders = await getGenders();

@@ -1,9 +1,14 @@
 import moment from 'moment';
 
-export function formatDate(date: Date | string): string {
+type DateFormat = 'DD-MM-YYYY' | 'YYYY-MM-DD';
+
+export function formatDate(
+  date: Date | string,
+  format: DateFormat = 'DD-MM-YYYY'
+): string {
   const d = new Date(date);
 
-  return moment(d).format('YYYY-MM-DD');
+  return moment(d).format(`${format}`);
 }
 
 export const calculateAge = (birthDay: Date | string): number => {

@@ -8,11 +8,22 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { AxiosError } from 'axios';
 import { useAppContext } from '@/store/store';
+import { cn } from '@/lib/utils';
 
-export function SubmitButton({ text }: { text: string }) {
+export function SubmitButton({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   const { pending } = useFormStatus();
   return (
-    <Button className='mt-5 text-base tracking-wider' disabled={pending}>
+    <Button
+      className={cn('text-base tracking-wider', className)}
+      type='submit'
+      disabled={pending}
+    >
       {pending ? (
         <>
           <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />

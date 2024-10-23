@@ -8,7 +8,7 @@ export interface Gender {
   gender: string;
 }
 
-export interface CrateUserState {
+export interface UserState {
   message: string;
 }
 

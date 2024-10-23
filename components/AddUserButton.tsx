@@ -15,10 +15,10 @@ import SelectInput from './form/SelectInput';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@radix-ui/react-icons';
-import { CrateUserState } from '@/utils/types';
+import { UserState } from '@/utils/types';
 import { useAppContext } from '@/store/store';
 
-const initialState: CrateUserState = {
+const initialState: UserState = {
   message: '',
 };
 
@@ -74,7 +74,7 @@ export default function AddUserButton() {
               <CustomInput label='Birthday' name='birthDay' type='date' />
               <SelectInput name='genderId' label='Gender' options={genders} />
             </div>
-            <SubmitButton text='Submit' />
+            <SubmitButton text='Submit' className='mt-5' />
           </div>
         </form>
       </DialogContent>
