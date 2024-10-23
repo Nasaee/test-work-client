@@ -41,8 +41,8 @@ export const createUser = async (state: CrateUserState, formData: FormData) => {
         message: error.response?.data?.message || 'Something went wrong',
       };
     }
+    return { message: 'An unexpected error occurred' };
   }
-  return { message: 'An unexpected error occurred' };
 };
 
 export const fetchUsers = async () => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -11,12 +11,17 @@ import {
 } from '@/components/ui/table';
 import { calculateAge, formatDate } from '@/utils/date';
 import { Button } from './ui/button';
-import { Pencil, Trash } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/store/store';
+import { User } from '@/utils/types';
+import { ButtonDelete } from './CustomButton';
 
 function UsersTable() {
   const { users, fetchUsers } = useAppContext();
+  const [selecteUser, setSelectedUser] = useState<User | null>(null);
+
+  console.log(selecteUser);
 
   useEffect(() => {
     async function getUsers() {
@@ -35,7 +40,7 @@ function UsersTable() {
             <TableHead className='font-medium'>Last name</TableHead>
             <TableHead className='font-medium'>Nick name</TableHead>
             <TableHead className='font-medium'>Date of birth</TableHead>
-            <TableHead className='font-medium'>Age</TableHead>
+            <TableHead className='font-medium'>Age (years)</TableHead>
             <TableHead className='font-medium'>Gender</TableHead>
             <TableHead className='font-medium'>Actions</TableHead>
           </TableRow>
@@ -64,12 +69,14 @@ function UsersTable() {
               </TableCell>
               <TableCell>
                 <div className='flex gap-2'>
-                  <Button className='bg-green-500 hover:bg-green-600'>
+                  <Button
+                    className='bg-green-500 hover:bg-green-600'
+                    onClick={() => setSelectedUser(user)}
+                  >
                     <Pencil />
                   </Button>
-                  <Button className='bg-red-400 hover:bg-red-500'>
-                    <Trash />
-                  </Button>
+
+                  <ButtonDelete id={user.id} />
                 </div>
               </TableCell>
             </TableRow>

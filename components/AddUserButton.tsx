@@ -1,6 +1,6 @@
 'use client';
 
-import { createUser, getGenders } from '@/utils/actions';
+import { createUser } from '@/utils/actions';
 import {
   Dialog,
   DialogContent,
@@ -10,8 +10,8 @@ import {
 } from './ui/dialog';
 import { SubmitButton } from './CustomButton';
 import { useFormState } from 'react-dom';
-import CustomInput from './InputCustom';
-import SelectInput from './SelectInput';
+import CustomInput from './form/InputCustom';
+import SelectInput from './form/SelectInput';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@radix-ui/react-icons';
