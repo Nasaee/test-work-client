@@ -1,8 +1,6 @@
 'use client';
 
-import { fetchUsers } from '@/utils/actions';
-import { User } from '@/utils/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Table,
   TableBody,

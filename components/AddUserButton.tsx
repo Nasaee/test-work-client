@@ -15,7 +15,7 @@ import SelectInput from './SelectInput';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@radix-ui/react-icons';
-import { CrateUserState, Gender } from '@/utils/types';
+import { CrateUserState } from '@/utils/types';
 import { useAppContext } from '@/store/store';
 
 const initialState: CrateUserState = {
@@ -25,17 +25,8 @@ const initialState: CrateUserState = {
 export default function AddUserButton() {
   const [state, formAction] = useFormState(createUser, initialState);
   const [openDialog, setOpenDialog] = useState(false);
-  const [genderOptions, setGenderOptions] = useState<Gender[]>([]);
   const { toast } = useToast();
-  const { users, fetchUsers } = useAppContext();
-
-  useEffect(() => {
-    async function fetchGender() {
-      const gender = await getGenders();
-      if (gender) setGenderOptions(gender);
-    }
-    fetchGender();
-  }, []);
+  const { genders, fetchUsers } = useAppContext();
 
   useEffect(() => {
     if (state.message && state.message !== 'User already exists') {
@@ -81,11 +72,7 @@ export default function AddUserButton() {
             />
             <div className='flex items-center gap-4'>
               <CustomInput label='Birthday' name='birthDay' type='date' />
-              <SelectInput
-                name='genderId'
-                label='Gender'
-                options={genderOptions}
-              />
+              <SelectInput name='genderId' label='Gender' options={genders} />
             </div>
             <SubmitButton text='Submit' />
           </div>
